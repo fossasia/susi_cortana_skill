@@ -1,0 +1,15 @@
+{
+  "name": "susi-cortana-skill",
+  "version": "1.0.0",
+  "description": "SUSI AI Cortana Skill",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "botbuilder": "^3.8.1",
+    "http": "0.0.0",
+    "request": "^2.81.0",
+    "restify": "^4.3.0"
+  }
+}
