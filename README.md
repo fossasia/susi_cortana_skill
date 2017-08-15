@@ -1,3 +1,7 @@
+# SUSI.AI Cortana Skill
+
+[![Build Status](https://travis-ci.org/fossasia/susi_cortana_skill.svg?branch=master)](https://travis-ci.org/fossasia/susi_cortana_skill)
+
 [Cortana](https://www.microsoft.com/en-us/windows/cortana) is assistant from microsoft just like Siri from Apple. We can make a skill for Cortana i.e Creating your own bot with in cortana so that you can use your bot through cortana by activating it using invocation name. To create SUSI cortana skill we will use [SUSI API](http://api.susi.ai) and Microsoft bot framework. First of all we will have to make a bot on microsoft bot framework and to do so follow this [tutorial](http://blog.fossasia.org/susi-ai-bots-with-microsofts-bot-framework/). Change code in this tutorial with code in app.js
 
 After making bot we have to configure this bot for Cortana and to do so select cortana from list of channel on your bot from [https://dev.botframework.com](https://dev.botframework.com) and add following detail shown in figure below.
