@@ -14,31 +14,42 @@ var connector = new builder.ChatConnector({
     appPassword: process.env.appPassword
 });
 
-setInterval(function() {
-		http.get(process.env.HerokuURL);
-	}, 1200000);
-
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
 //getting response from SUSI API upon receiving messages from User
 bot.dialog('/', function(session) {
-    var msg = session.message.text;
+    session.sendTyping();
     var options = {
         method: 'GET',
-        url: 'http://api.asksusi.com/susi/chat.json',
+        url: "http://api.susi.ai/susi/chat.json",
         qs: {
             timezoneOffset: '-330',
             q: session.message.text
         }
     };
-//sending request to SUSI API for response 
-request(options, function(error, response, body) {
+    session.sendTyping();
+    if(session.message.text.toLowerCase == "get started"){
+        var initial_card = new builder.HeroCard(session)
+                .title('SUSI AI')
+                .subtitle('Open Source personal assistant')
+                .text('I am built by open source community Fossasia and I am evolving continuously.')            
+                .buttons([
+           builder.CardAction.openUrl(session, 'https://github.com/fossasia/susi_server', 'See Github')
+        ])
+        
+        var reply = new builder.Message(session)
+                .addAttachment(initial_card);
+        session.sendTyping();
+        session.send(reply);
+    } else {
+        request(options, function(error, response, body) {
         if (error) throw new Error(error);
         var type = (JSON.parse(body)).answers[0].actions;
         var cards = [];
         if (type.length == 1 && type[0].type == "answer") {
             var msg = (JSON.parse(body)).answers[0].actions[0].expression;
+            session.sendTyping();
             session.say(msg, msg);
         } else if (type.length == 1 && type[0].type == "table") {
             var data = (JSON.parse(body)).answers[0].data;
@@ -59,6 +70,8 @@ request(options, function(error, response, body) {
             var reply = new builder.Message(session)
                 .attachmentLayout(builder.AttachmentLayout.carousel)
                 .attachments(cards);
+
+            session.sendTyping();
             session.send(reply);
 
         } else if (type.length == 2 && type[1].type == "rss"){
@@ -70,6 +83,7 @@ request(options, function(error, response, body) {
             for (var i = 0; i < 4; i++) {
             if(i==0){
                 msg = (JSON.parse(body)).answers[0].actions[0].expression;
+                session.sendTyping();
                 session.say(msg, msg);
             } else{
                 msg =key[2].toUpperCase() + ": " + data[i][key[2]] + "\n" + "\n" + key[3].toUpperCase() + ": " + data[i][key[3]];
@@ -82,8 +96,11 @@ request(options, function(error, response, body) {
             var reply = new builder.Message(session)
                 .attachmentLayout(builder.AttachmentLayout.carousel)
                 .attachments(cards);
-
+            
+            session.sendTyping();
             session.send(reply);
+
         }
     })
+    }
 });
