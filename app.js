@@ -22,7 +22,7 @@ bot.dialog('/', function(session) {
     session.sendTyping();
     var options = {
         method: 'GET',
-        url: 'http://api.susi.ai/susi/chat.json',
+        url: "http://api.susi.ai/susi/chat.json",
         qs: {
             timezoneOffset: '-330',
             q: session.message.text
