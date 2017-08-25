@@ -49,7 +49,7 @@ bot.dialog('/', function(session) {
             .buttons([
                 builder.CardAction.imBack(session, 'What is FOSSASIA?', 'What is FOSSASIA?'),
                 builder.CardAction.imBack(session, 'Who is Einstein?', 'Who is Einstein?'),
-                builder.CardAction.imBack(session, 'Borders with INDIA', 'Borders with India')
+                builder.CardAction.imBack(session, 'Borders with India', 'Borders with India')
             ]);
         
         var reply1 = new builder.Message(session)
